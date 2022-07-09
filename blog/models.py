@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 class TagQuerySet(models.QuerySet):
 
-    def popular(self):
+    def tag_posts(self):
         number_tag_posts = self.annotate(Count('posts'))
 
         return number_tag_posts
