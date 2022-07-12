@@ -6,10 +6,10 @@ from django.contrib.auth.models import User
 
 class TagQuerySet(models.QuerySet):
 
-    def tag_posts(self):
-        number_tag_posts = self.annotate(Count('posts'))
+    def popular(self):
+        popular_tags = self.annotate(Count('posts')).order_by('-posts__count')
 
-        return number_tag_posts
+        return popular_tags
 
 
 class PostQuerySet(models.QuerySet):

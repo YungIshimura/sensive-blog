@@ -41,7 +41,7 @@ def index(request):
                                   'tags', queryset=Tag.objects.annotate(Count('posts')))))
 
     most_popular_tags = Tag.objects.annotate(post_count=Count('posts'))\
-                                   .tag_posts()[:5]
+                                   .popular()[:5]
 
     context = {
         'most_popular_posts': [
@@ -85,7 +85,7 @@ def post_detail(request, slug):
     }
 
     most_popular_tags = Tag.objects.annotate(post_count=Count('posts'))\
-                                   .tag_posts()[:5]
+                                   .popular()[:5]
 
     most_popular_posts = Post.objects.popular()\
                                      .prefetch_related('author')[:5]\
@@ -106,7 +106,7 @@ def post_detail(request, slug):
 
 def tag_filter(request, tag_title):
     tag = Tag.objects.get(title=tag_title)
-    most_popular_tags = Tag.objects.tag_posts()[:5]
+    most_popular_tags = Tag.objects.popular()[:5]
 
     most_popular_posts = Post.objects.popular()\
                                      .prefetch_related('author')[:5]\
